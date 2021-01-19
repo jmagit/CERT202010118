@@ -1,5 +1,9 @@
 package com.example;
 
+import com.example.entities.Persona;
+import com.example.entities.Profesor;
+import com.example.util.Validaciones;
+
 /**
  * Demos del curso
  * 
@@ -16,6 +20,29 @@ public class Principal {
 	public static void main(String... args) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public void clases() {
+		try {
+			Persona p = new Profesor();
+			Profesor profesor = new Profesor();
+			
+			var d = profesor.getDrireccion();
+			Profesor.Asignatura a;
+			var v = new Validaciones();
+			p = new Persona(0, "xxx", null) {
+				
+				@Override
+				public String saluda() {
+					//v.
+					return null;
+				}
+			};
+			// profesor.
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
