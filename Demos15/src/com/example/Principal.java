@@ -1,7 +1,13 @@
 package com.example;
 
+import com.example.entities.Alumno;
+import com.example.entities.Elemento;
+import com.example.entities.Factura;
+import com.example.entities.Grafico;
 import com.example.entities.Persona;
 import com.example.entities.Profesor;
+import com.example.entities.ProfesorImp;
+import com.example.entities.ProfesorOtro;
 import com.example.util.Validaciones;
 
 /**
@@ -21,24 +27,52 @@ public class Principal {
 		// TODO Auto-generated method stub
 
 	}
-	
+	public void genericos() throws Exception {
+		var provincia = new Elemento<Integer>(1, "Madrid");
+		provincia.setKey(28);
+		var genero = new Elemento<>('M', "Masculino");
+		genero.setKey('m');
+		var x = new Elemento<ProfesorImp>(new ProfesorImp(0, null, null, 4), "kk");
+		var f = new Factura();
+		var rslt = f.get(Alumno.class); //f.facturar(new Alumno(0, null, null));
+		//rslt.
+	}
 	public void clases() {
 		try {
-			Persona p = new Profesor();
-			Profesor profesor = new Profesor();
-			
-			var d = profesor.getDrireccion();
-			Profesor.Asignatura a;
-			var v = new Validaciones();
+			Persona p = new ProfesorImp();
+			Profesor profesor = new ProfesorOtro();
+			boolean cond = true;
+			//var d = profesor.getDrireccion();
+			ProfesorImp.Asignatura a;
 			p = new Persona(0, "xxx", null) {
 				
 				@Override
 				public String saluda() {
-					//v.
 					return null;
+				}
+
+				@Override
+				public void pintate() {
+					// TODO Auto-generated method stub
+					
 				}
 			};
 			// profesor.
+			Object object = null;
+			Grafico v;
+			// ...
+			if(cond) {
+				v = p;
+			} else {
+				v = new Factura();
+			}
+			// ...
+			v.pintate();
+			
+			if(object instanceof Grafico) {
+				((Grafico)object).pintate();
+			}
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

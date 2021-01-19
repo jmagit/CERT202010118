@@ -2,7 +2,7 @@ package com.example.entities;
 
 import com.example.util.Validaciones;
 
-public abstract class Persona {
+public abstract class Persona implements Grafico{
 	private int id;
 	private String nombre, apellido;
 	

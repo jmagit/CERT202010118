@@ -1,7 +1,7 @@
 package com.example.entities;
 
 public class Alumno extends Persona {
-	Profesor.Asignatura[] asignaturas;
+	ProfesorImp.Asignatura[] asignaturas;
 
 	public Alumno(int id, String nombre, String apellido) throws Exception {
 		super(id, nombre, apellido);
@@ -12,6 +12,11 @@ public class Alumno extends Persona {
 	public String saluda() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public void pintate() {
+		System.out.println("Soy el alumno " + getNombre());
 	}
 
 }
