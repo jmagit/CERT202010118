@@ -43,9 +43,9 @@ public class Principal {
 			Principal p = (Principal) o;
 			p.suma(4);
 			p.suma((float)3, (int)4);
-			algo(0);
-			algo(0, 3);
-			una(0);
+			p.algo(0);
+			p.algo(0, 3);
+			p.una(0);
 		}
 		switch (i) {
 		case 1:
