@@ -1,5 +1,7 @@
 package com.example.entities;
 
+import java.util.Optional;
+
 public class ProfesorOtro extends Otra implements Profesor {
 
 	@Override
@@ -27,7 +29,7 @@ public class ProfesorOtro extends Otra implements Profesor {
 	}
 
 	@Override
-	public String getApellido() {
+	public Optional<String> getApellido() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,5 +1,7 @@
 package com.example.entities;
 
+import java.util.Optional;
+
 import com.example.util.Validaciones;
 
 public abstract class Persona implements Grafico{
@@ -44,8 +46,10 @@ public abstract class Persona implements Grafico{
 			throw new Exception("El nombre debe estar relleno");
 		this.nombre = nombre;
 	}
-	public String getApellido() {
-		return apellido;
+	public Optional<String> getApellido() {
+		if(apellido == null)
+			return Optional.empty();
+		return Optional.of(apellido);
 	}
 	public void setApellido(String apellido) {
 		this.apellido = apellido;

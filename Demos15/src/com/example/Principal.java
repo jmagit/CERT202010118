@@ -3,6 +3,7 @@ package com.example;
 import com.example.entities.Alumno;
 import com.example.entities.Elemento;
 import com.example.entities.Factura;
+import com.example.entities.Genero;
 import com.example.entities.Grafico;
 import com.example.entities.Persona;
 import com.example.entities.Profesor;
@@ -22,12 +23,41 @@ public class Principal {
 	 * Método principal
 	 * 
 	 * @param args Argumentos de la linea de comandos
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
 	 */
-	public static void main(String... args) {
-		// TODO Auto-generated method stub
+	public static void main(String... args) throws Exception {
+//		var x = new Elemento<ProfesorImp>(new ProfesorImp(0, null, null, 4), "kk");
+//		x = new Elemento<ProfesorImp>(null, "kk");
+//		x.getKey().setId(0);
+		var a = new Alumno(0, "dd", null);
+		a.setGenero(Genero.MASCULINO);
+		System.out.println(a.getGenero());
+		var c = a.getGenero().getValue();
+		a.setGenero(Genero.getEnum('F'));
+		System.out.println(a.getGenero());
 
+//		var p = new ProfesorImp(0, "xxx", null, 4);
+//		String s = null;
+//		if(p.getApellido().isPresent())
+//		    s = p.getApellido().get();
+//		System.out.println(p.getApellido().orElse("vacio"));
+//		p.setApellido(s.toUpperCase());
+//		System.out.println(p.getApellido().orElse("algo"));
+		
+//		var clase = Class.forName("com.example.entities.Factura");
+//		Object object = clase.newInstance();
+//		var clase = Elemento.class;
+//		var provincia = new Elemento<Integer>(1, "Madrid");
+//		System.out.println(provincia instanceof Elemento);
+//		var lst = clase.getMethods()[2];
+//		clase.getMethods()[2].invoke(provincia, "cadena");
+////		clase.getMethod("setKey", Object.class).invoke(provincia, 'A');
+//		System.out.println(provincia.getKey().getClass().getName());
+//		System.out.println(clase.getMethod("getKey", null).getReturnType().getName());
 	}
 	public void genericos() throws Exception {
+		var p = new ProfesorImp(0, null, null, 4);
 		var provincia = new Elemento<Integer>(1, "Madrid");
 		provincia.setKey(28);
 		var genero = new Elemento<>('M', "Masculino");
