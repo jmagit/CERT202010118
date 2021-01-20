@@ -1,10 +1,15 @@
 package com.example.entities;
 
+import java.io.IOError;
 import java.util.Optional;
 
+import com.example.util.Autor;
+import com.example.util.CursoException;
 import com.example.util.Validaciones;
 
+@Autor(nombre = "yo", apellidos = "mismo")
 public abstract class Persona implements Grafico{
+	@Autor(nombre = "yo")
 	private int id;
 	private String nombre, apellido;
 	
@@ -22,6 +27,7 @@ public abstract class Persona implements Grafico{
 	
 	private Direccion direccion;
 	
+	@Autor(nombre = "yo")
 	public Direccion getDrireccion() {
 		return direccion;
 	}
@@ -43,7 +49,7 @@ public abstract class Persona implements Grafico{
 	}
 	public void setNombre(String nombre) throws Exception {
 		if(Validaciones.estaVacia(nombre))
-			throw new Exception("El nombre debe estar relleno");
+			throw new CursoException("El nombre debe estar relleno");
 		this.nombre = nombre;
 	}
 	public Optional<String> getApellido() {
@@ -51,8 +57,17 @@ public abstract class Persona implements Grafico{
 			return Optional.empty();
 		return Optional.of(apellido);
 	}
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
+	public void setApellido(String apellido) throws CursoException {
+		try {
+			this.apellido = apellido.toUpperCase();			
+		} catch(NullPointerException|IOError ex) {
+			// throw new CursoException("El apellido debe estar relleno", ex);
+			if(ex instanceof IndexOutOfBoundsException) {
+				this.apellido = "algo";
+			} else {
+				throw ex;
+			}
+		}
 	}
 	public abstract String saluda();
 }

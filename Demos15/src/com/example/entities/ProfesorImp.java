@@ -1,5 +1,7 @@
 package com.example.entities;
 
+import com.example.util.CursoException;
+
 public class ProfesorImp extends Persona implements Profesor {
 	public static class Asignatura {
 		
@@ -36,4 +38,19 @@ public class ProfesorImp extends Persona implements Profesor {
 		System.out.println("Soy el profesor " + getNombre());
 	}
 	
+	public String getNombreCompleto() {
+		return getApellido() + ", " + getNombre();
+	}
+	@Override
+	public void setSalario(double value) {
+		salario = value;
+		
+	}
+	
+	public void setApellido(String apellido) {
+		try {
+			super.setApellido(apellido);
+		} catch (CursoException e) {
+		}
+	}
 }

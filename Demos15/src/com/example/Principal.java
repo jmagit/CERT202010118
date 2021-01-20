@@ -1,5 +1,7 @@
 package com.example;
 
+import java.lang.annotation.Annotation;
+
 import com.example.entities.Alumno;
 import com.example.entities.Elemento;
 import com.example.entities.Factura;
@@ -9,6 +11,7 @@ import com.example.entities.Persona;
 import com.example.entities.Profesor;
 import com.example.entities.ProfesorImp;
 import com.example.entities.ProfesorOtro;
+import com.example.util.Autor;
 import com.example.util.Validaciones;
 
 /**
@@ -27,17 +30,27 @@ public class Principal {
 	 * @throws NoSuchMethodException 
 	 */
 	public static void main(String... args) throws Exception {
+		Annotation[] anutaciones = Genero.class.getAnnotations();
+		System.out.println(Genero.class.getAnnotation(Autor.class).nombre());
+
+		Principal app = new Principal();
+		app.afirmar("", 1, new int[10], 1);
+		System.out.println("Fin");
 //		var x = new Elemento<ProfesorImp>(new ProfesorImp(0, null, null, 4), "kk");
 //		x = new Elemento<ProfesorImp>(null, "kk");
 //		x.getKey().setId(0);
-		var a = new Alumno(0, "dd", null);
-		a.setGenero(Genero.MASCULINO);
-		System.out.println(a.getGenero());
-		var c = a.getGenero().getValue();
-		a.setGenero(Genero.getEnum('F'));
-		System.out.println(a.getGenero());
+		//
+//		var a = new Alumno(0, "dd", null);
+//		a.setGenero(Enum.valueOf(Genero.class, "MASCULINO"));
+//		System.out.println(a.getGenero());
+//		var c = a.getGenero().getValue();
+//		a.setGenero(Genero.getEnum('F'));
+//		System.out.println(a.getGenero());
 
 //		var p = new ProfesorImp(0, "xxx", null, 4);
+//		p.getNombreCompleto();
+//		Profesor.despedir(p);
+		
 //		String s = null;
 //		if(p.getApellido().isPresent())
 //		    s = p.getApellido().get();
@@ -55,6 +68,16 @@ public class Principal {
 ////		clase.getMethod("setKey", Object.class).invoke(provincia, 'A');
 //		System.out.println(provincia.getKey().getClass().getName());
 //		System.out.println(clase.getMethod("getKey", null).getReturnType().getName());
+	}
+
+	@Deprecated
+	public void afirmar(String cad, int divisor, int[] tabla, int indice) {
+		assert cad != null;
+		assert divisor > 0 : "debe ser positivo";
+		assert tabla != null;
+		assert 0 <= indice && indice <= tabla.length;
+		// ...
+		assert tabla != null;
 	}
 	public void genericos() throws Exception {
 		var p = new ProfesorImp(0, null, null, 4);

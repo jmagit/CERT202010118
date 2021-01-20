@@ -1,5 +1,8 @@
 package com.example.entities;
 
+import com.example.util.Autor;
+
+@Autor(nombre = "yo", apellidos = { "mismo", "soy" })
 public enum Genero {
 	DESCONOCIDO (null), MASCULINO('M'), FEMENINO('F'), NEUTRO ('N');
 

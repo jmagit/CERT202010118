@@ -45,11 +45,12 @@ public class ProfesorOtro extends Otra implements Profesor {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	public void setSalario(double value) {
+	}
 
 	@Override
 	public String saluda() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }
