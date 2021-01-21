@@ -1,6 +1,7 @@
 package com.example;
 
 import java.lang.annotation.Annotation;
+import java.util.function.Supplier;
 
 import com.example.entities.Alumno;
 import com.example.entities.Elemento;
@@ -31,6 +32,14 @@ public class Principal {
 	 * @throws NoSuchMethodException 
 	 */
 	public static void main(String... args) throws Exception {
+		int x = 1, y = 2;
+		Supplier<Integer> supplier = new Supplier<Integer>() {
+			@Override
+			public Integer get() {
+				return x + y;
+			}
+		};
+		int rslt = supplier.get();
 //		Otra a;
 //		a.dos();
 //		com.example.util.Otra b;

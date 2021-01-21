@@ -22,8 +22,8 @@ public class Delegados {
 		return a + b;
 	}
 	
-	Calcular operacion() {
-		return (a, b) -> a * b;
+	Calcular operacion(int min) {
+		return (a, b) -> a * b < min ? min : a * b;
 	}
 	
 	Optional<Persona> buscar(Persona[] t, Predicate<Persona> where) {
@@ -41,6 +41,9 @@ public class Delegados {
 			}
 		};
 		Persona[] lst = new Persona[10];
+		
+		calc = operacion(0);
+		int resl = calc.operacion(5, -1);
 		
 		var pp = buscar(lst, item -> item.getNombre().startsWith("P"));
 		pp = buscar(lst, item -> item.getNombre().startsWith("P") && item.getApellido() != null || item.getId() == 0);

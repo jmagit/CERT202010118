@@ -12,7 +12,6 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ TYPE, FIELD, METHOD })
-@Deprecated
 public @interface Autor {
 	String nombre();
 	String[] apellidos() default { "" };

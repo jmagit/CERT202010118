@@ -1,7 +1,11 @@
 package com.example;
 
 import java.lang.annotation.Annotation;
+import java.util.List;
+import java.util.ServiceLoader;
+import java.util.stream.Collectors;
 
+import com.example.contracts.AlumnoRepository;
 import com.example.entities.Alumno;
 import com.example.entities.Elemento;
 import com.example.entities.Factura;
@@ -31,48 +35,53 @@ public class Principal {
 	 * @throws NoSuchMethodException 
 	 */
 	public static void main(String... args) throws Exception {
+		List<Integer> listOfIntegers = List.of(5, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+		System.out.println("Sequential Stream: ");
+		listOfIntegers.stream().distinct()
+			.peek(System.out::println)
+			.map(e ->e.toString() + " es " + (e%2 == 0 ? "PAR" : "IMPAR"))
+			.filter(e -> !e.startsWith("2"))					
+			.sorted().forEach(e -> System.out.print(e + " "));
+//		System.out.println("\nParallel Stream: ");
+//		listOfIntegers.stream().parallel()
+//			.map(e -> e*21).collect(Collectors.toList())
+//			.sorted().forEach(System.out::println);
+
+	}
+	public static void servicios() throws Exception {
+		ServiceLoader<AlumnoRepository> services = ServiceLoader.load(AlumnoRepository.class);
+		services.forEach(srv -> {
+			try {
+				srv.add(new Alumno(1, "Pepito", "Grillo"));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		System.out.println("Fin");
+
 //		Otra a;
 //		a.dos();
 //		com.example.util.Otra b;
 //		b.uno();
-		Annotation[] anutaciones = Genero.class.getAnnotations();
-		System.out.println(Genero.class.getAnnotation(Autor.class).nombre());
-
-		Principal app = new Principal();
-		app.afirmar("", 1, new int[10], 1);
-		System.out.println("Fin");
+//		Annotation[] anutaciones = Genero.class.getAnnotations();
+//		System.out.println(Genero.class.getAnnotation(Autor.class).nombre());
+//
+//		Principal app = new Principal();
+//		app.afirmar("", 1, new int[10], 1);
+//		System.out.println("Fin");
 //		var x = new Elemento<ProfesorImp>(new ProfesorImp(0, null, null, 4), "kk");
 //		x = new Elemento<ProfesorImp>(null, "kk");
 //		x.getKey().setId(0);
 		//
-//		var a = new Alumno(0, "dd", null);
-//		a.setGenero(Enum.valueOf(Genero.class, "MASCULINO"));
-//		System.out.println(a.getGenero());
-//		var c = a.getGenero().getValue();
-//		a.setGenero(Genero.getEnum('F'));
-//		System.out.println(a.getGenero());
 
-//		var p = new ProfesorImp(0, "xxx", null, 4);
-//		p.getNombreCompleto();
-//		Profesor.despedir(p);
-		
-//		String s = null;
-//		if(p.getApellido().isPresent())
-//		    s = p.getApellido().get();
-//		System.out.println(p.getApellido().orElse("vacio"));
-//		p.setApellido(s.toUpperCase());
-//		System.out.println(p.getApellido().orElse("algo"));
-		
-//		var clase = Class.forName("com.example.entities.Factura");
-//		Object object = clase.newInstance();
-//		var clase = Elemento.class;
-//		var provincia = new Elemento<Integer>(1, "Madrid");
-//		System.out.println(provincia instanceof Elemento);
-//		var lst = clase.getMethods()[2];
-//		clase.getMethods()[2].invoke(provincia, "cadena");
-////		clase.getMethod("setKey", Object.class).invoke(provincia, 'A');
-//		System.out.println(provincia.getKey().getClass().getName());
-//		System.out.println(clase.getMethod("getKey", null).getReturnType().getName());
+		String cad = "";
+		for(int i=0; i <100; i++)
+			cad +="X";
+		StringBuilder sb = new StringBuilder(cad);
+		for(int i=0; i <100; i++)
+			sb.append("X");
+		cad = sb.toString();
 	}
 
 	@Deprecated
