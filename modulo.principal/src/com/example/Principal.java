@@ -4,6 +4,11 @@ import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ServiceLoader;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -39,6 +44,64 @@ public class Principal {
 	 * @throws NoSuchMethodException
 	 */
 	public static void main(String... args) throws Exception {
+		Callable<String> c1 = new Callable<String>() {
+			@Override
+			public String call() throws Exception {
+				Thread.sleep(1000);
+				System.out.println("Termino uno");
+				if(true)
+					throw new IndexOutOfBoundsException();
+				return "Soy el uno";
+			}
+		};
+		ExecutorService servicio = Executors.newFixedThreadPool(10);
+		try {
+			Future<String> resultado1 = servicio.submit(c1);
+			Future<String> resultado2 = servicio.submit(() -> { System.out.println("Termino dos"); return "Soy el dos"; });
+			while(!resultado1.isDone() && !resultado2.isDone()) {
+				if (resultado1.isDone())
+					System.out.println(resultado1.get());
+				if (resultado2.isDone())
+					System.out.println(resultado2.get());
+				Thread.sleep(0);
+			}
+			System.out.println("FIN");
+		} catch (ExecutionException e) {
+			e.getCause().printStackTrace();
+		} finally {
+			servicio.shutdown();
+		}
+
+	}
+
+	public static void hilos() throws Exception {
+		List<Integer> listaPedidos;
+		Thread h1 = new Thread(() -> {
+			for (var i = 1; i <= 10; i++)
+				try {
+					System.out.println("Hijo 1: " + i);
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		});
+		Thread h2 = new Thread(() -> {
+			for (var i = 1; i <= 5; i++)
+				try {
+					System.out.println("Hijo 2: " + i);
+					Thread.sleep(1500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		});
+		h1.start();
+		h2.start();
+
+	}
+
+	public static void colecciones() throws Exception {
 		List<Persona> lst = new ArrayList<>();
 		lst.add(new Alumno(4, "Pablo", "Marmol"));
 		lst.add(new Alumno(1, "Pepito", "Grillo"));
@@ -50,15 +113,10 @@ public class Principal {
 		lst.stream().filter(e -> e instanceof Profesor).map(e -> ((Profesor) e))
 //			.sorted((a, b)-> -a.getNombre().compareTo(b.getNombre()))
 				.map(e -> e.getNombre()).sorted().forEach(System.out::println);
-		lst.stream()
-			.filter(e -> e instanceof Profesor)
-			.map(e -> ((Profesor) e))
-			.forEach(e -> e.setSalario(e.getSalario() * 1.1));
-		var rslt = lst.stream()
-				.filter(e -> e instanceof Profesor)
-				.map(e -> ((Profesor) e))
-				.peek(e -> e.setSalario(e.getSalario() * 1.1))
-				.map(e -> e.getSalario())
+		lst.stream().filter(e -> e instanceof Profesor).map(e -> ((Profesor) e))
+				.forEach(e -> e.setSalario(e.getSalario() * 1.1));
+		var rslt = lst.stream().filter(e -> e instanceof Profesor).map(e -> ((Profesor) e))
+				.peek(e -> e.setSalario(e.getSalario() * 1.1)).map(e -> e.getSalario())
 				.reduce((acumulado, actual) -> acumulado + actual);
 		System.out.println(rslt);
 		int rows = 3, pag = 0;
@@ -71,7 +129,7 @@ public class Principal {
 
 		Predicate<Persona> where;
 		boolean verAlumnos = false;
-		
+
 		System.out.println("Salto de página");
 		Stream<Persona> consulta = lst.stream();
 		if (verAlumnos) {
@@ -82,30 +140,27 @@ public class Principal {
 			consulta = consulta.filter(item -> item instanceof Profesor);
 //			where = item -> item instanceof Profesor;
 		}
-			
-		// ...	
+
+		// ...
 //		consulta.filter(where).forEach(System.out::println);;
 		consulta.forEach(System.out::println);
-			
+
 		System.out.println(lst.stream().filter(item -> item instanceof Alumno && item.getId() == 6).findFirst());
-		List<Profesor> profes = lst.stream().filter(e -> e instanceof Profesor).map(e -> ((Profesor) e)).collect(Collectors.toList());
-		System.out.println(profes.stream().allMatch(item -> item.getSalario() > 0));	
-		System.out.println(profes.stream().filter(item -> item.getSalario() > 3000).findAny().get().getSalario());	
-		List<Elemento<Integer>> ele = lst.stream()
-				.filter(e -> e instanceof Profesor)
-				.map(e -> new Elemento<Integer>(e.getId(),e.getNombre() + (e.getApellido().isPresent() ? " " + e.getApellido().get() : "" )))
+		List<Profesor> profes = lst.stream().filter(e -> e instanceof Profesor).map(e -> ((Profesor) e))
+				.collect(Collectors.toList());
+		System.out.println(profes.stream().allMatch(item -> item.getSalario() > 0));
+		System.out.println(profes.stream().filter(item -> item.getSalario() > 3000).findAny().get().getSalario());
+		List<Elemento<Integer>> ele = lst.stream().filter(e -> e instanceof Profesor)
+				.map(e -> new Elemento<Integer>(e.getId(),
+						e.getNombre() + (e.getApellido().isPresent() ? " " + e.getApellido().get() : "")))
 				.collect(Collectors.toList());
 		ele.forEach(System.out::println);
 
 		var suma = 0.0;
 		final List<Double> salarios = new ArrayList<>();
-		
-			lst.stream()
-				.filter(e -> e instanceof Profesor)
-				.map(e -> ((Profesor) e))
-				.peek(e -> e.setSalario(e.getSalario() * 1.1))
-				.map(e -> e.getSalario())
-				.forEach(e -> salarios.add(e));
+
+		lst.stream().filter(e -> e instanceof Profesor).map(e -> ((Profesor) e))
+				.peek(e -> e.setSalario(e.getSalario() * 1.1)).map(e -> e.getSalario()).forEach(e -> salarios.add(e));
 
 //		List<Integer> listOfIntegers = List.of(5, 1, 2, 3, 4, 5, 6, 7, 8, 9);
 //
