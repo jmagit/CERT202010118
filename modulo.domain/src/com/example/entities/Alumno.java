@@ -72,6 +72,9 @@ public class Alumno extends Persona implements Comparable<Alumno> {
 		else 
 			return getId() - o.getId();
 	}
+	public int comparePorNombre(Alumno o) {
+		return getNombre().compareTo(o.getNombre());
+	}
 	
 	public void op1() {
 		a();
@@ -97,4 +100,11 @@ public class Alumno extends Persona implements Comparable<Alumno> {
 	public Alumno d() {
 		return this;
 	}
+
+	@Override
+	public String toString() {
+		return "Alumno [" + getId() + " " + getNombre() + (getApellido().isPresent() ? " " + getApellido().get() : "" ) +"]";
+	}
+	
+	
 }

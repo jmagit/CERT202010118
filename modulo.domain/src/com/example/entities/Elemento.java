@@ -22,5 +22,9 @@ public class Elemento<K> {
 		this.value = value;
 	}
 	
+	@Override
+	public String toString() {
+		return "Elemento [key=" + key + ", value=" + value + "]";
+	}
 	
 }
