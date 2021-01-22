@@ -1,6 +1,7 @@
 package com.example;
 
 import java.lang.annotation.Annotation;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ServiceLoader;
 import java.util.stream.Collectors;
@@ -35,7 +36,18 @@ public class Principal {
 	 * @throws NoSuchMethodException 
 	 */
 	public static void main(String... args) throws Exception {
+		List<Persona> lst = new ArrayList<>();
+		lst.add(new Alumno(1, "Pepito", "Grillo"));
+		lst.add(new Alumno(2, "Carmelo", "Coton"));
+		lst.add(new Alumno(3, "Pedro", "Pica Piedra"));
+		lst.add(new Alumno(3, "Pablo", "Marmol"));
+		lst.add(new ProfesorImp(1, "Justo", "Valiente", 3000.00));
+		lst.add(new ProfesorImp(2, "Aula", "Virtual 1", 1500.00));
+		
+		
+		
 		List<Integer> listOfIntegers = List.of(5, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+
 		System.out.println("Sequential Stream: ");
 		listOfIntegers.stream().distinct()
 			.peek(System.out::println)
